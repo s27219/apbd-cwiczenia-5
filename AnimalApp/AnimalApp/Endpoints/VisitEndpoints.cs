@@ -9,18 +9,17 @@ public static class VisitEndpoints
     public static void MapVisitEndpoints(this WebApplication app)
     {
         //pobieranie listy wizyt powiązanych z danym zwierzeciem
-        app.MapGet("/animals/{animalId}/visits", (int animalId) =>
+        app.MapGet("/animals/{animalId}/visits", (MockDb db, int animalId) =>
         {
-            var visits = new MockDb().Visits.Where(v => v.VisitedAnimal.Id == animalId).ToList();
+            var visits = db.Visits.Where(v => v.VisitedAnimal.Id == animalId).ToList();
             return Results.Ok(visits);
         });
         
         //dodawanie nowych wizyt
-        app.MapPost("/visits", (Visit visit) =>
+        app.MapPost("/visits", (MockDb db, Visit visit) =>
         {
-            var visits = new MockDb().Visits;
+            var visits = db.Visits;
             visits.Add(visit);
-            //leave empty?
             return Results.Created("", visit);
         });
     }

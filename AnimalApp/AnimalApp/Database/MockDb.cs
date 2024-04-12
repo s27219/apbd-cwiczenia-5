@@ -24,5 +24,7 @@ public class MockDb
             Description = "Annual vaccination",
             Price = 100.00M
         });
+        
+        
     }
 }
